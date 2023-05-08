@@ -7,7 +7,6 @@
 
 Created a new environment called env_NoduleNet which I will use for the NoduleNet in order to have all the correct dependencies. It has Python version 3.7 as this was needed for openCV download 
 
- 
 
 Struggled with the opencv install for a while and then I installed it using pip and it worked.  
 
@@ -15,11 +14,6 @@ Now I am struggling with an error message during setup:
 error: command 'gcc' failed with exit status 1 
 
  
-
- 
-
- 
-
 I realized that the gcc error was actually caused by errors higher upp in the error message.  
 
 First thing I did was install the ninja package and sencondly I changed the function AT_CHECK to TORCH_CHECK which is apparently needed as this package is not in newer python versions. The printed message when installing the script was still long and seemed to contain errors still. But it might work now.  
@@ -28,11 +22,7 @@ First thing I did was install the ninja package and sencondly I changed the func
 
 Then I had some issues with downloading the dataset they suggested. However it worked to download it using 7za x subsetX.zip. Downloading the data takes a lot of time so I will keep working on this tomorrow after the downloads are finished.  
 
- 
 
- 
-
- 
 
 There was an issue with following the preprocessing steps suggested in the NoduleNet readme file. However it was solved by installing the pynrrd package followd by changing the cvrt_annons_to_npy.py file to allow pickling of the data:  
 
@@ -40,11 +30,7 @@ There was an issue with following the preprocessing steps suggested in the Nodul
 
 After this the scripts ran through the preprocessing.  
 
- 
 
- 
-
- 
 
 For the NoduleNet an issue I ran into was an error message that read: 
 
@@ -56,15 +42,8 @@ To solve it I had to change the following requirement to say 0 at the end (inste
 
  
 
- 
-
- 
-
- 
-
 Managed to get NoduleNet to work on the LIDC data following the steps that they suggested for the preprocessing and dataselection.  
 
- 
 
 I used the dataset: 
 
@@ -96,43 +75,28 @@ For the testing and the reported values from it that I got were
 
  
 
- 
-
- 
 
 Talked to Luis about the lung package work on the Nodule Net. He said I should try to change the dataloading script instead of changing the data to .raw and .mhd data. He said there might be some preprocessing done before the data was converted into the .raw dataformat so I need to check how it looks after reading it in the script.  
 
  
-
 Loading the data using SimpleITK worked if I loaded the .mhd file. The data does not look cropped or normalized. 
 
 Looking at the data loaded in the test.py script, however, it seems like the data has been processed somehow. The data seems to have been normalized between –1 and 1 and there also seems like there has been HU clipping which I am not sure if it was done correclty. The image does not look to be cropped.  
 
- 
-
- 
+  
 
 I realized that the preprocessing of NoduleNet includes cropping the data around the lung mask as well as removing all data outside the lungs (setting it to pad_value = 170). The crop ends very close to lungs, risk of cropping part of the lungs? 
 
 This means that I need to have segmentation of the lungs on order to use this model.  
 
  
-
- 
-
- 
-
-Downloaded some of the files from Fidans data to test the model.  
+Downloaded some of the files from the nifty data to test the model.  
 
 Managed to get the script to run for the data, both preprocessing and eval. But when the eval script is run then it says in the end that there is no ground truth mask.  
 
  
 
 It seems the script is reading the evaluationScript/annotations/LIDC/3_annotation.csv file, which seems to be a custom made file containing information about the location of the nodules. So It would appear as though this file is used to compare the predictions and as there are no files with these names in that file it assumes there are no gt annotations of nodules... 
-
- 
-
- 
 
  
 
