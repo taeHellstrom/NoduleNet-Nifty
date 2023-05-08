@@ -2,7 +2,7 @@ import os
 import numpy as np
 import torch
 import random
-
+import SimpleITK as sitk
 
 # Set seed
 SEED = 35202
@@ -30,7 +30,7 @@ torch.cuda.manual_seed_all(SEED)
 #     'ctr_arr_save_dir': BASE + 'mask_test',
 #     'mask_save_dir': BASE + 'nod_segs',
 #     'mask_exclude_save_dir': BASE + 'masks_exclude_test',
-
+ 
 
 #     'roi_names': ['nodule'],
 #     'crop_size': [128, 128, 128],
