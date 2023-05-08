@@ -4,6 +4,6 @@ results*/
 .ipynb_checkpoints/*
 .idea/*
 *.o
-*.ipynb
+
 *.ckpt
 .vscode/*
